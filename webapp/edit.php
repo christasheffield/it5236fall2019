@@ -14,7 +14,6 @@ require_once 'credentials.php';
 try{
 	
 	$conn_string = "mysql:host=".$dbserver.";dbname=".$db;
-	
 	$dbh= new PDO($conn_string, $dbusername, $dbpassword);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
