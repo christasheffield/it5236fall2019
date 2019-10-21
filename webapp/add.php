@@ -3,24 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$dbconnecterror = FALSE;
-$dbh = NULL;
-
-require_once 'credentials.php';
-
-try{
-	
-	$conn_string = "mysql:host=".$dbserver.";dbname=".$db;
-	
-	$dbh= new PDO($conn_string, $dbusername, $dbpassword);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	
-}catch(Exception $e){
-	$dbconnecterror = TRUE;
-}
-
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-	
+
 	if (array_key_exists('fin', $_POST)) {
 		$complete = 1;
 	} else {
@@ -33,24 +17,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$finBy = $_POST['finBy'];
 	}
 
-	if (!$dbconnecterror) {
-		try {
-			$sql = "INSERT INTO doList (complete, listItem, finishDate) VALUES (:complete, :listItem, :finishDate)";
-			$stmt = $dbh->prepare($sql);			
-			$stmt->bindParam(":complete", $complete);
-			$stmt->bindParam(":listItem", $_POST['listItem']);
-			$stmt->bindParam(":finishDate", $finBy);
-			$response = $stmt->execute();	
-			
-			header("Location: index.php");
-			
-		} catch (PDOException $e) {
-			header("Location: index.php?error=add");
-		}	
-	} else {
-		header("Location: index.php?error=add");
-	}
+	$url = "http://3.84.13.234/api/task.php";
+	data = json_encode([
+		// json data here
+	]);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		'Content-Type: application/json',
+		'Content-Length: ' . strlen($data)
+	]);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response  = curl_exec($ch);
+	$http_status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
+	header("Location: index.php");
+
+	header("Location: index.php?error=add");
 }
 
 
-?>
