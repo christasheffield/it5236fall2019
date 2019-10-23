@@ -2,7 +2,7 @@
 //index is GET
 
 // call the api to get our content
-$url = "http://3.84.13.234/api/tasks.php";
+$url = "http://3.81.195.62/api/tasks.php";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [

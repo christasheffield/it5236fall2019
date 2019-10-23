@@ -2,7 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$taskID = $_POST["listID"];
 
-	$url = "http://3.84.13.234/api/task.php?listID=$taskID";
+	$url = "http://3.81.195.62/api/task.php?listID=$taskID";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, [

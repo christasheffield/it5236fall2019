@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$finBy = $_POST['finBy'];
 	}
 
-	$url = "http://3.84.13.234/api/task.php";
+	$url = "http://3.81.195.62/api/task.php";
 	$data = json_encode([
 		'complete' => $complete,
 		'taskName' => $listItem,
