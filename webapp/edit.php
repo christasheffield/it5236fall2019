@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 
 	$url = "http://3.84.13.234/api/task.php?listID=$listID";
-	data = json_encode([
+	$data = json_encode([
 		'complete' => $complete,
 		'taskName' => $listItem,
 		'taskDate' => $finBy
