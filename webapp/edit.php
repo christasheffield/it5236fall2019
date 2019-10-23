@@ -1,27 +1,29 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+	// Get the task's ID and name, respectively
 	$listID = $_POST['listID'];
-
+	$listItem = $_POST['listItem'];
+	
+	// Get the task's completion status
 	if (array_key_exists('fin', $_POST)) {
 		$complete = 1;
 	} else {
 		$complete = 0;
 	}
+	
+	// Get the task's due date
 	if (empty($_POST['finBy'])) {
 		$finBy = null;
 	} else {
 		$finBy = $_POST['finBy'];
 	}
-	$listItem = $_POST['listItem'];
 
 	$url = "http://3.84.13.234/api/task.php?listID=$listID";
 	data = json_encode([
-		// json data here
+		'complete' => $complete,
+		'taskName' => $listItem,
+		'taskDate' => $finBy
 	]);
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -35,8 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$response  = curl_exec($ch);
 	$http_status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	curl_close($ch);
-
-
-	header("Location: index.php");
-	header("Location: index.php?error=edit");
-
+	
+	// check if the request worked correctly or not
+	if ($http_status_code == 204) {
+		header("Location: index.php");
+	} else {
+		header("Location: index.php?error=edit");
+	}
+}

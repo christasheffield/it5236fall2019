@@ -1,10 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+	$listItem = $_POST['listItem'];
+	
 	if (array_key_exists('fin', $_POST)) {
 		$complete = 1;
 	} else {
@@ -19,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 	$url = "http://3.84.13.234/api/task.php";
 	data = json_encode([
-		// json data here
+		'complete' => $complete,
+		'taskName' => $listItem,
+		'taskDate' => $finBy
 	]);
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -34,9 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$http_status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	curl_close($ch);
 
-	header("Location: index.php");
-
-	header("Location: index.php?error=add");
+	
+	
+	if ($http_status_code == 201) {
+		header("Location: index.php");
+	} else {
+		header("Location: index.php?error=add");
+	}
 }
 
 
