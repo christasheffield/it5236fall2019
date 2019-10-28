@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == "PUT") {
 	}
 	
 	//Data Validation
-	if (array_key_exists('complete', $task)) {
-		$complete = $task["complete"];
+	if (array_key_exists('completed', $task)) {
+		$complete = $task["completed"];
 	} else {
 		//Bad request
 		http_response_code(404);
@@ -72,7 +72,9 @@ if (!$dbconnecterror) {
 			$stmt->bindParam(":finishDate", $taskDate);
 			$stmt->bindParam(":listID", $listID);
 			$response = $stmt->execute();
-			http_response_code(204); //no content
+			http_response_code(200);
+			$task['listID'] = $taskID;
+			echo json_encode($task);
 			exit();
 
 		} catch (PDOException $e) {
@@ -99,8 +101,8 @@ if (!$dbconnecterror) {
 	}
 	
 	//Data Validation
-	if (array_key_exists('complete', $task)) {
-		$complete = $task["complete"];
+	if (array_key_exists('completed', $task)) {
+		$complete = $task["completed"];
 	} else {
 		//Bad request
 		http_response_code(404);
@@ -134,7 +136,8 @@ if (!$dbconnecterror) {
 			$stmt->execute();
 			$taskID = $dbh->lastInsertId();
 			http_response_code(201); //task created
-			echo json_encode (["listID" => $taskID]);
+			$task['listID'] = $taskID;
+			echo json_encode($task);
 			exit();
 
 		} catch (PDOException $e) {
