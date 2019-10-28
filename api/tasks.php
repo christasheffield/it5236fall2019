@@ -29,7 +29,29 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 			$stmt->execute();
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			http_response_code(200); // successful request
-			echo json_encode ($result);
+			
+			// key   db key   json key
+			// id: listID -> listID
+			// name: listItem -> taskName
+			// date: finishDate -> taskDate
+			// status: complete -> completed
+			
+			$final = [];
+			foreach($result as $task) {
+				$task['taskName'] = $task['listItem'];
+				$task['taskDate'] = $task['finishDate'];
+				$task['completed'] = $task['complete'];
+				
+				unset(
+					$task['listItem'],
+					$task['finishDate'],
+					$task['complete']
+				);
+				
+				$final[] = $task;
+			}
+			
+			echo json_encode($final);
 			exit();
 			
 		} catch (PDOException $e) {
