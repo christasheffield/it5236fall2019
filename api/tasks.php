@@ -18,7 +18,7 @@ try{
 	http_response_code(504);
 	echo "database issues were encountered";
 	exit();
-}
+} 
 
 //GET (get all tasks) 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 				$task['taskName'] = $task['listItem'];
 				$task['taskDate'] = $task['finishDate'];
 				$task['completed'] = $task['complete'];
-				$task['completed'] = $task['complete'] ? TRUE : FALSE;
+				$task['completed'] = $task['completed'] ? TRUE : FALSE;
 				
 				unset(
 					$task['listItem'],

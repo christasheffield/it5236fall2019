@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "PUT") {
 	
 	//Data Validation
 	if (array_key_exists('completed', $task)) {
-		$complete = $task["completed"];
+		$complete = $task['completed'] ? 1 : 0;
 	} else {
 		//Bad request
 		http_response_code(404);
@@ -102,7 +102,7 @@ if (!$dbconnecterror) {
 	
 	//Data Validation
 	if (array_key_exists('completed', $task)) {
-		$complete = $task["completed"];
+		$complete = $task['completed'] ? 1 : 0;
 	} else {
 		//Bad request
 		http_response_code(404);
