@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 				$task['taskName'] = $task['listItem'];
 				$task['taskDate'] = $task['finishDate'];
 				$task['completed'] = $task['complete'];
+				$task['completed'] = $task['complete'] ? TRUE : FALSE;
 				
 				unset(
 					$task['listItem'],
