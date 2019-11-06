@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 	$url = "http://3.81.195.62/api/task.php";
 	$data = json_encode([
-		'complete' => $complete,
+		'completed' => $complete,
 		'taskName' => $listItem,
 		'taskDate' => $finBy
 	]);
@@ -34,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$http_status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	curl_close($ch);
 
-	
-	
 	if ($http_status_code == 201) {
 		header("Location: index.php");
 	} else {

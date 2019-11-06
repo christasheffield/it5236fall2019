@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "PUT") {
 	} else {
 		//Bad request
 		http_response_code(404);
-		echo "Missing complete";
+		echo "Missing completed";
 	exit();
 	}
     if (array_key_exists('taskName', $task)) {
@@ -72,9 +72,7 @@ if (!$dbconnecterror) {
 			$stmt->bindParam(":finishDate", $taskDate);
 			$stmt->bindParam(":listID", $listID);
 			$response = $stmt->execute();
-			http_response_code(200);
-			$task['listID'] = $taskID;
-			echo json_encode($task);
+			http_response_code(204);
 			exit();
 
 		} catch (PDOException $e) {
@@ -136,8 +134,6 @@ if (!$dbconnecterror) {
 			$stmt->execute();
 			$taskID = $dbh->lastInsertId();
 			http_response_code(201); //task created
-			$task['listID'] = $taskID;
-			echo json_encode($task);
 			exit();
 
 		} catch (PDOException $e) {
