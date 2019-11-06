@@ -52,28 +52,35 @@ try {
 } catch (DynamoDbException $e) {
     $error_message = $e->getMessage();
 }
+?>
+<!doctype html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="description" content="doIT">
+	<meta name="author" content="Russell Thackston">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-echo "<pre>";
-foreach($all_tasks as $task) {
-	$completed = false;
-	if (isset($task['completed']) && $task['completed'] == 1) {
-		$completed = true;
-	}
+	<title>doIT</title>
 
-	echo $task['listID'];
-	echo PHP_EOL;
-	echo $task['taskName'];
-	echo PHP_EOL;
-	echo $task['taskDate'];
-	echo PHP_EOL;
-	echo $completed ? 'true' : 'false';
-	echo PHP_EOL;
-	echo PHP_EOL;
-}
-echo "</pre>";
+	<link rel="stylesheet" href="style/style.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Chilanka%7COrbitron&display=swap" rel="stylesheet">		
 
-/****************************************************
-HTML goes here. Use the code above (lines 66-83) 
-as an example for how to display the task data.
-Remove lines 66-83 when the HTML is complete.
-****************************************************/
+</head>
+
+
+<body>
+	<a href="index.php"><h1 id="siteName">doIT</h1></a>
+	<hr>
+	<?php foreach($all_tasks as $task) { ?>
+		<div class="list">
+			<input type="text" disabled name="listID" value="<?php echo $task["listID"];?>" >
+			<input type="text" 	name="listItem" size="50" value="<?php echo $task["taskName"];?>" maxlength="100" >
+			<span>by:</span>
+			<input type="date" 	name="finBy" value="<?php if($task['taskDate']){echo $task['taskDate'];} ?>" >
+			<input type="checkbox" disabled name="fin" <?php if($task["completed"]){echo "checked='checked'";} ?> >
+		</div>
+	<?php } ?>
+</body>
+</html>
